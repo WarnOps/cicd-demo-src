@@ -22,6 +22,20 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push Frontend
+      uses: docker/build-push-action@v3
+      with:
+        context: azure-vote/src/azure-vote-front
+        file: azure-vote/src/azure-vote-front/Dockerfile
+        push: false
+        tags: ajwar93/azvote/azure-vote-front:latest
+    - name: Build and push Backend
+      uses: docker/build-push-action@v3
+      with:
+        context: azure-vote/src/azure-vote-back
+        file: azure-vote/src/azure-vote-back/Dockerfile
+        push: false
+        tags: ajwar93/azvote/azure-vote-back:latest
     - name: Create Frontend Image Tags
       env:
         SOURCE_LOCATION: src/azure-vote-front 

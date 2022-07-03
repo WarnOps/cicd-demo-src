@@ -19,25 +19,7 @@ echo $DOCKER_FILE
 
 set -euxo pipefail  # fail on error
   
-# Generate an tag with a reproducible checksum of all files in . by doing a checksum of all files
-# in alphabetical order, then another checksum of their names and checksums.
-# Running this command on windows-based infrastructure may return a different result due to CRLF
-git config --global --add safe.directory $GITHUB_WORKSPACE
-pushd $GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION
-imageTag=$(git log -n 1 --format="%H" -- ".")
-popd
-  
-# If the image with the generated tag doesn't already exist, build it.
-echo Tag for new container: $imageTag
-apk add --update docker openrc
-rc-update add docker boot
-docker -v
-docker build \
-    -t "$REPOSITORY:$imageTag" \
-    -t "$REPOSITORY:latest" \
-    -f "$GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION/$DOCKER_FILE" \
-    $GITHUB_WORKSPACE/$SRC_FOLDER/$SOURCE_LOCATION
-
+imageTag=latest
 
 set +x
 echo "setting IMAGE_TAG output for task $TASKNAME"
