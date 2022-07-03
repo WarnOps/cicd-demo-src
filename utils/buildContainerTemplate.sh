@@ -29,6 +29,7 @@ popd
   
 # If the image with the generated tag doesn't already exist, build it.
 echo Tag for new container: $imageTag
+apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 docker -v
 docker build \
     -t "$REPOSITORY:$imageTag" \
