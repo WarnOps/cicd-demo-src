@@ -29,6 +29,7 @@ popd
   
 # If the image with the generated tag doesn't already exist, build it.
 echo Tag for new container: $imageTag
+docker -v
 docker build \
     -t "$REPOSITORY:$imageTag" \
     -t "$REPOSITORY:latest" \
