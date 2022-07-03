@@ -29,7 +29,8 @@ popd
   
 # If the image with the generated tag doesn't already exist, build it.
 echo Tag for new container: $imageTag
-curl -fsSL https://get.docker.com/ | sh
+apk add --update docker openrc
+rc-update add docker boot
 docker -v
 docker build \
     -t "$REPOSITORY:$imageTag" \
